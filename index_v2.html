@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sales Focus — трекер эффективности</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --card-bg: #0f172a;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --danger: #f97373;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      padding: 16px 16px 24px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      backdrop-filter: blur(20px);
+      margin-bottom: 14px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .metric-card {
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.08), rgba(15, 23, 42, 0.9));
+      border-radius: 14px;
+      padding: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .progress-bar {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #22c55e, var(--accent));
+      width: 0;
+      transition: width 0.25s ease-out;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      font-size: 13px;
+      padding: 8px 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top, var(--accent), #0ea5e9);
+      color: #0b1220;
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-main);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .advice-card {
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.96));
+      border-radius: var(--radius-lg);
+      padding: 10px 11px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-top: 8px;
+    }
+
+    .charts-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .chart-box {
+      height: 170px;
+      position: relative;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 10px;
+      text-align: center;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <div class="header">
+        <div>
+          <div class="title">Sales Focus</div>
+          <div class="date" id="today-date"></div>
+        </div>
+        <div class="status-pill" id="status-pill">
+          <span class="status-pill-dot"></span>
+          <span id="status-text">Старт дня</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Твои действия сегодня</div>
+      <div class="section-sub">
+        Цели по звонкам и дозвонам автоматически снижаются, когда ты проводишь больше встреч.
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Звонки</div>
+          <div class="metric-value" id="calls-value">0 / 70</div>
+          <div class="progress-bar"><div class="progress-fill" id="calls-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Дозвоны</div>
+          <div class="metric-value" id="reached-value">0 / 25</div>
+          <div class="progress-bar"><div class="progress-fill" id="reached-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Встречи проведено</div>
+          <div class="metric-value" id="meetings-value">0 / 2</div>
+          <div class="progress-bar"><div class="progress-fill" id="meetings-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Встречи назначено</div>
+          <div class="metric-value" id="scheduled-value">0 / 2</div>
+          <div class="progress-bar"><div class="progress-fill" id="scheduled-progress"></div></div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-add-call">+ Звонок</button>
+        <button class="btn btn-secondary" id="btn-add-reached">+ Дозвон</button>
+        <button class="btn btn-secondary" id="btn-add-meeting">+ Провёл встречу</button>
+        <button class="btn btn-secondary" id="btn-add-scheduled">+ Назначил встречу</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Совет на сейчас</div>
+      <div class="section-sub">Учитываю твои цели, динамику дня и средние показатели за прошлые дни.</div>
+      <div class="advice-card">
+        <div id="advice-main">Начни день с первых звонков, чтобы задать темп 💪</div>
+        <div style="font-size:11px;color:#9ca3af;" id="advice-extra">
+          Добавь первые 5 звонков и дозвонов, чтобы я рассчитал динамику и дал более точные рекомендации.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Графики эффективности</div>
+      <div class="section-sub">
+        Слева — динамика по дням, справа — ход сегодняшнего дня.
+      </div>
+      <div class="charts-wrapper">
+        <div class="chart-box">
+          <canvas id="historyChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <canvas id="todayChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Данные хранятся в браузере: по дням, с динамикой в течение дня.
+    </footer>
+  </div>
+
+  <!-- Подтягиваем Chart.js для красивых графиков -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Базовые цели на день (до корректировки встречами)
+    const baseGoals = {
+      calls: 70,
+      reached: 25,
+      meetings: 2,
+      scheduled: 2
+    };
+
+    const WORK_START_HOUR = 9.5; // 9:30
+    const WORK_END_HOUR = 18.5;  // 18:30
+
+    const state = {
+      calls: 0,
+      reached: 0,
+      meetings: 0,
+      scheduled: 0
+    };
+
+    let events = [];        // события сегодняшнего дня
+    let historyChart = null;
+    let todayChart = null;
+
+    // ==== Вспомогательные функции даты/хранилища ====
+    function getTodayKey() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function getHistory() {
+      const raw = localStorage.getItem("salesFocus_history");
+      if (!raw) return {};
+      try { return JSON.parse(raw); } catch { return {}; }
+    }
+
+    function saveHistory(history) {
+      localStorage.setItem("salesFocus_history", JSON.stringify(history));
+    }
+
+    function saveHistorySnapshot() {
+      const history = getHistory();
+      const key = getTodayKey();
+      history[key] = {
+        calls: state.calls,
+        reached: state.reached,
+        meetings: state.meetings,
+        scheduled: state.scheduled
+      };
+      saveHistory(history);
+    }
+
+    function saveState() {
+      const payload = { ...state, date: getTodayKey() };
+      localStorage.setItem("salesFocus_state", JSON.stringify(payload));
+      saveHistorySnapshot();
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem("salesFocus_state");
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data.date === getTodayKey()) {
+          state.calls = data.calls || 0;
+          state.reached = data.reached || 0;
+          state.meetings = data.meetings || 0;
+          state.scheduled = data.scheduled || 0;
+        }
+      } catch (e) {
+        console.warn("state parse error", e);
+      }
+    }
+
+    function getEventsKey(dateKey) {
+      return "salesFocus_events_" + dateKey;
+    }
+
+    function saveEvents() {
+      localStorage.setItem(getEventsKey(getTodayKey()), JSON.stringify(events));
+    }
+
+    function loadEvents() {
+      const raw = localStorage.getItem(getEventsKey(getTodayKey()));
+      if (!raw) return [];
+      try { return JSON.parse(raw); } catch { return []; }
+    }
+
+    function logEvent(type) {
+      events.push({ type, ts: new Date().toISOString() });
+      saveEvents();
+    }
+
+    // ==== Динамическая корректировка целей по встречам ====
+    function getEffectiveGoals() {
+      const g = { ...baseGoals };
+      if (state.meetings >= 3) {
+        g.calls = 30;
+        g.reached = 10;
+      } else if (state.meetings === 2) {
+        g.calls = 50;
+        g.reached = 15;
+      } else if (state.meetings === 1) {
+        g.calls = 60;
+        g.reached = 20;
+      }
+      return g;
+    }
+
+    // ==== Расчёты для советов ====
+    function getDayFraction() {
+      const now = new Date();
+      const h = now.getHours() + now.getMinutes() / 60;
+      if (h <= WORK_START_HOUR) return 0;
+      if (h >= WORK_END_HOUR) return 1;
+      return (h - WORK_START_HOUR) / (WORK_END_HOUR - WORK_START_HOUR);
+    }
+
+    function getHistoryContext() {
+      const history = getHistory();
+      const today = getTodayKey();
+      const keys = Object.keys(history).filter(k => k !== today).sort();
+      if (!keys.length) return "";
+      const last = keys.slice(-7);
+      let sumCalls = 0, sumReached = 0, sumMeetings = 0;
+      last.forEach(d => {
+        const h = history[d];
+        sumCalls += h.calls || 0;
+        sumReached += h.reached || 0;
+        sumMeetings += h.meetings || 0;
+      });
+      const n = last.length;
+      const avgCalls = sumCalls / n;
+      const avgConv = sumCalls ? (sumReached / sumCalls) * 100 : 0;
+      const todayConv = state.calls ? (state.reached / state.calls) * 100 : 0;
+
+      let text = `За последние ${n} дн. средний объём звонков был около ${avgCalls.toFixed(0)}, сегодня пока ${state.calls}.`;
+      if (sumCalls && state.calls) {
+        text += ` Средняя конверсия звонок→дозвон была ${avgConv.toFixed(1)}%, сегодня ${todayConv.toFixed(1)}%.`;
+      }
+      return text;
+    }
+
+    function getAdvice() {
+      const goals = getEffectiveGoals();
+      const f = getDayFraction();
+      const callsExpected = goals.calls * f;
+      const reachedExpected = goals.reached * f;
+
+      let status = "В процессе";
+      let main = "";
+      let extra = "";
+
+      if (state.calls === 0 && f > 0.1) {
+        status = "Сильное отставание";
+        main = "День уже идёт, а звонков нет. Сделай рывок: 15 быстрых звонков подряд без отвлечений.";
+        extra = "Закрой мессенджеры и почту на 30 минут, сфокусируйся только на наборе и коротком питче.";
+      } else if (state.calls < callsExpected - 10) {
+        status = "Отставание по звонкам";
+        main = "Сделай блок из 10 звонков подряд, чтобы выровнять темп по количеству.";
+        extra = "Не ищи идеальный разговор — цель блока просто закрыть отставание по объёму.";
+      } else if (state.reached < reachedExpected - 5) {
+        status = "Слабые дозвоны";
+        main = "Дозвонов меньше нормы. Проверь базу и время прозвона.";
+        extra = "Попробуй другой сегмент или другое время дня, протестируй более цепляющее начало разговора.";
+      } else if (state.reached > 10 && state.scheduled < state.meetings) {
+        status = "Мало назначенных встреч";
+        main = "Есть дозвоны и встречи, но мало новых назначений.";
+        extra = "Каждый разговор заканчивай конкретным предложением времени Zoom, а не общим «созвонимся позже».";
+      } else if (state.calls >= goals.calls && state.reached >= goals.reached) {
+        status = "План выполнен ✅";
+        main = "Отличный день: цели по объёму и дозвонам закрыты.";
+        extra = "Подведи итоги: выпиши 3–5 фраз, которые сегодня лучше всего работали, и повтори их завтра.";
+      } else {
+        status = "Идёшь по плану";
+        main = "Темп хороший. Продолжай держать ритм и добивай встречи из дозвонов.";
+        extra = "Сфокусируйся на том, чтобы каждый второй дозвон превращался хотя бы в одну назначенную встречу.";
+      }
+
+      const historyText = getHistoryContext();
+      if (historyText) {
+        extra += " " + historyText;
+      }
+
+      return { status, main, extra };
+    }
+
+    // ==== Обновление UI ====
+    function updateUI() {
+      const goals = getEffectiveGoals();
+
+      document.getElementById("calls-value").textContent = `${state.calls} / ${goals.calls}`;
+      document.getElementById("reached-value").textContent = `${state.reached} / ${goals.reached}`;
+      document.getElementById("meetings-value").textContent = `${state.meetings} / ${baseGoals.meetings}`;
+      document.getElementById("scheduled-value").textContent = `${state.scheduled} / ${baseGoals.scheduled}`;
+
+      const setWidth = (id, value, goal) => {
+        document.getElementById(id).style.width = `${Math.min((value / goal) * 100, 100)}%`;
+      };
+
+      setWidth("calls-progress", state.calls, goals.calls);
+      setWidth("reached-progress", state.reached, goals.reached);
+      setWidth("meetings-progress", state.meetings, baseGoals.meetings);
+      setWidth("scheduled-progress", state.scheduled, baseGoals.scheduled);
+
+      const advice = getAdvice();
+      document.getElementById("advice-main").textContent = advice.main;
+      document.getElementById("advice-extra").textContent = advice.extra;
+      document.getElementById("status-text").textContent = advice.status;
+
+      saveState();
+      renderHistoryChart();
+      renderTodayChart();
+    }
+
+    // ==== Графики ====
+    function renderHistoryChart() {
+      if (typeof Chart === "undefined") return;
+      const canvas = document.getElementById("historyChart");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const history = getHistory();
+      const keys = Object.keys(history).sort();
+      if (!keys.length) {
+        if (historyChart) { historyChart.destroy(); historyChart = null; }
+        return;
+      }
+
+      const labels = keys;
+      const callsData = labels.map(d => history[d].calls || 0);
+      const meetingsData = labels.map(d => history[d].meetings || 0);
+
+      if (historyChart) historyChart.destroy();
+
+      historyChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Звонки",
+              data: callsData,
+            },
+            {
+              label: "Встречи",
+              data: meetingsData,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: "#e5e7eb", font: { size: 10 } } }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#9ca3af", font: { size: 9 } },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: "#9ca3af", font: { size: 9 } },
+              grid: { color: "rgba(148, 163, 184, 0.2)" }
+            }
+          }
+        }
+      });
+    }
+
+    function renderTodayChart() {
+      if (typeof Chart === "undefined") return;
+      const canvas = document.getElementById("todayChart");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!events.length) {
+        if (todayChart) { todayChart.destroy(); todayChart = null; }
+        return;
+      }
+
+      const sorted = [...events].sort((a, b) => a.ts.localeCompare(b.ts));
+      let calls = 0, reached = 0, meetings = 0;
+      const labels = [];
+      const callsPoints = [];
+      const reachedPoints = [];
+      const meetingsPoints = [];
+
+      sorted.forEach(e => {
+        if (e.type === "call") calls++;
+        if (e.type === "reached") reached++;
+        if (e.type === "meeting") meetings++;
+        labels.push(new Date(e.ts).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }));
+        callsPoints.push(calls);
+        reachedPoints.push(reached);
+        meetingsPoints.push(meetings);
+      });
+
+      if (todayChart) todayChart.destroy();
+
+      todayChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            { label: "Звонки (накопительно)", data: callsPoints, tension: 0.35 },
+            { label: "Дозвоны", data: reachedPoints, tension: 0.35 },
+            { label: "Встречи проведено", data: meetingsPoints, tension: 0.35 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: "#e5e7eb", font: { size: 10 } } }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#9ca3af", font: { size: 9 }, maxTicksLimit: 6 },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: "#9ca3af", font: { size: 9 } },
+              grid: { color: "rgba(148, 163, 184, 0.2)" }
+            }
+          }
+        }
+      });
+    }
+
+    // ==== Инициализация ====
+    document.addEventListener("DOMContentLoaded", () => {
+      const now = new Date();
+      document.getElementById("today-date").textContent = now.toLocaleDateString("ru-RU");
+
+      loadState();
+      events = loadEvents();
+      updateUI();
+
+      document.getElementById("btn-add-call").onclick = () => {
+        state.calls++;
+        logEvent("call");
+        updateUI();
+      };
+      document.getElementById("btn-add-reached").onclick = () => {
+        state.reached++;
+        logEvent("reached");
+        updateUI();
+      };
+      document.getElementById("btn-add-meeting").onclick = () => {
+        state.meetings++;
+        logEvent("meeting");
+        updateUI();
+      };
+      document.getElementById("btn-add-scheduled").onclick = () => {
+        state.scheduled++;
+        logEvent("scheduled");
+        updateUI();
+      };
+    });
+  </script>
+</body>
+</html>
