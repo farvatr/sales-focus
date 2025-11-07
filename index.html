@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sales Focus — трекер эффективности</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --card-bg: #0f172a;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --danger: #f97373;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      padding: 16px 16px 24px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      backdrop-filter: blur(20px);
+      margin-bottom: 14px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .metric-card {
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.08), rgba(15, 23, 42, 0.9));
+      border-radius: 14px;
+      padding: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .progress-bar {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #22c55e, var(--accent));
+      width: 0;
+      transition: width 0.25s ease-out;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      font-size: 13px;
+      padding: 8px 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top, var(--accent), #0ea5e9);
+      color: #0b1220;
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-main);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .advice-card {
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.96));
+      border-radius: var(--radius-lg);
+      padding: 10px 11px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 10px;
+      text-align: center;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <div class="header">
+        <div>
+          <div class="title">Sales Focus</div>
+          <div class="date" id="today-date"></div>
+        </div>
+        <div class="status-pill" id="status-pill">
+          <span class="status-pill-dot"></span>
+          <span id="status-text">Старт дня</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Твои действия сегодня</div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Звонки</div>
+          <div class="metric-value" id="calls-value">0 / 70</div>
+          <div class="progress-bar"><div class="progress-fill" id="calls-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Дозвоны</div>
+          <div class="metric-value" id="reached-value">0 / 25</div>
+          <div class="progress-bar"><div class="progress-fill" id="reached-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Встречи проведено</div>
+          <div class="metric-value" id="meetings-value">0 / 2</div>
+          <div class="progress-bar"><div class="progress-fill" id="meetings-progress"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Встречи назначено</div>
+          <div class="metric-value" id="scheduled-value">0 / 2</div>
+          <div class="progress-bar"><div class="progress-fill" id="scheduled-progress"></div></div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-add-call">+ Звонок</button>
+        <button class="btn btn-secondary" id="btn-add-reached">+ Дозвон</button>
+        <button class="btn btn-secondary" id="btn-add-meeting">+ Провёл встречу</button>
+        <button class="btn btn-secondary" id="btn-add-scheduled">+ Назначил встречу</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Совет на сейчас</div>
+      <div class="advice-card">
+        <div id="advice-main">Начни день с первых звонков, чтобы задать темп 💪</div>
+        <div style="font-size:11px;color:#9ca3af;" id="advice-extra">Добавь первые 5 звонков и дозвонов, чтобы я рассчитал динамику.</div>
+      </div>
+    </div>
+
+    <footer>Данные сохраняются локально (offline).</footer>
+  </div>
+
+  <script>
+    const goals = { calls: 70, reached: 25, meetings: 2, scheduled: 2 };
+    const WORK_START_HOUR = 9.5;
+    const WORK_END_HOUR = 18.5;
+    const state = { calls: 0, reached: 0, meetings: 0, scheduled: 0 };
+
+    function saveState() {
+      localStorage.setItem("salesFocus", JSON.stringify(state));
+    }
+    function loadState() {
+      const data = localStorage.getItem("salesFocus");
+      if (data) Object.assign(state, JSON.parse(data));
+    }
+    function updateUI() {
+      document.getElementById("calls-value").textContent = `${state.calls} / ${goals.calls}`;
+      document.getElementById("reached-value").textContent = `${state.reached} / ${goals.reached}`;
+      document.getElementById("meetings-value").textContent = `${state.meetings} / ${goals.meetings}`;
+      document.getElementById("scheduled-value").textContent = `${state.scheduled} / ${goals.scheduled}`;
+      const setWidth = (id, value, goal) => { document.getElementById(id).style.width = `${Math.min((value / goal) * 100, 100)}%`; };
+      setWidth("calls-progress", state.calls, goals.calls);
+      setWidth("reached-progress", state.reached, goals.reached);
+      setWidth("meetings-progress", state.meetings, goals.meetings);
+      setWidth("scheduled-progress", state.scheduled, goals.scheduled);
+      const advice = getAdvice();
+      document.getElementById("advice-main").textContent = advice.main;
+      document.getElementById("advice-extra").textContent = advice.extra;
+      document.getElementById("status-text").textContent = advice.status;
+      saveState();
+    }
+    function getDayFraction() {
+      const now = new Date();
+      const h = now.getHours() + now.getMinutes() / 60;
+      if (h <= WORK_START_HOUR) return 0;
+      if (h >= WORK_END_HOUR) return 1;
+      return (h - WORK_START_HOUR) / (WORK_END_HOUR - WORK_START_HOUR);
+    }
+    function getAdvice() {
+      const f = getDayFraction();
+      const callsExpected = goals.calls * f;
+      const reachedExpected = goals.reached * f;
+      let status = "В процессе", main = "", extra = "";
+      if (state.calls < callsExpected - 10) {
+        status = "Отставание по звонкам";
+        main = "Сделай блок из 10 звонков подряд, чтобы выровнять темп.";
+        extra = "Не анализируй — просто добей план по количеству, потом разберёшь конверсии.";
+      } else if (state.reached < reachedExpected - 5) {
+        status = "Слабые дозвоны";
+        main = "Дозвонов меньше нормы. Проверь качество базы и время звонков.";
+        extra = "Попробуй сдвинуть звонки на другое время дня или поменяй сегмент клиентов.";
+      } else if (state.scheduled < state.meetings && state.reached > 10) {
+        status = "Мало назначенных встреч";
+        main = "У тебя хватает дозвонов, но мало назначений.";
+        extra = "Добавь чёткий блок ценности в конце разговора и попроси конкретный слот для Zoom.";
+      } else if (state.calls >= goals.calls && state.reached >= goals.reached) {
+        status = "План выполнен ✅";
+        main = "Отличный день! Можно подвести итоги и записать выводы по конверсии.";
+        extra = "Сохрани фразы, которые лучше всего сработали сегодня.";
+      } else {
+        status = "Идёшь по плану";
+        main = "Темп хороший. Продолжай дозваниваться и закрепи успех встречами.";
+        extra = "Сосредоточься на том, чтобы каждый дозвон превращался в назначенную встречу.";
+      }
+      return { status, main, extra };
+    }
+    document.getElementById("btn-add-call").onclick = () => { state.calls++; updateUI(); };
+    document.getElementById("btn-add-reached").onclick = () => { state.reached++; updateUI(); };
+    document.getElementById("btn-add-meeting").onclick = () => { state.meetings++; updateUI(); };
+    document.getElementById("btn-add-scheduled").onclick = () => { state.scheduled++; updateUI(); };
+    document.addEventListener("DOMContentLoaded", () => {
+      const now = new Date();
+      document.getElementById("today-date").textContent = now.toLocaleDateString("ru-RU");
+      loadState();
+      updateUI();
+    });
+  </script>
+</body>
+</html>
