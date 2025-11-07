@@ -1,0 +1,354 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="ru">\
+<head>\
+  <meta charset="UTF-8" />\
+  <title>Sales Focus \'97 \uc0\u1090 \u1088 \u1077 \u1082 \u1077 \u1088  \u1101 \u1092 \u1092 \u1077 \u1082 \u1090 \u1080 \u1074 \u1085 \u1086 \u1089 \u1090 \u1080 </title>\
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\
+  <style>\
+    :root \{\
+      --bg: #050816;\
+      --card-bg: #0f172a;\
+      --accent: #38bdf8;\
+      --accent-soft: rgba(56, 189, 248, 0.15);\
+      --danger: #f97373;\
+      --text-main: #e5e7eb;\
+      --text-muted: #9ca3af;\
+      --radius-lg: 18px;\
+    \}\
+\
+    * \{\
+      box-sizing: border-box;\
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;\
+    \}\
+\
+    body \{\
+      margin: 0;\
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);\
+      color: var(--text-main);\
+      min-height: 100vh;\
+      display: flex;\
+      justify-content: center;\
+    \}\
+\
+    .app \{\
+      width: 100%;\
+      max-width: 480px;\
+      padding: 16px 16px 24px;\
+    \}\
+\
+    .card \{\
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));\
+      border-radius: var(--radius-lg);\
+      padding: 14px 16px;\
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);\
+      border: 1px solid rgba(148, 163, 184, 0.15);\
+      backdrop-filter: blur(20px);\
+      margin-bottom: 14px;\
+    \}\
+\
+    .header \{\
+      display: flex;\
+      justify-content: space-between;\
+      align-items: center;\
+      margin-bottom: 8px;\
+    \}\
+\
+    .title \{\
+      font-size: 18px;\
+      font-weight: 600;\
+    \}\
+\
+    .date \{\
+      font-size: 12px;\
+      color: var(--text-muted);\
+    \}\
+\
+    .status-pill \{\
+      font-size: 11px;\
+      padding: 4px 10px;\
+      border-radius: 999px;\
+      background: var(--accent-soft);\
+      color: var(--accent);\
+      border: 1px solid rgba(56, 189, 248, 0.35);\
+      display: inline-flex;\
+      align-items: center;\
+      gap: 5px;\
+    \}\
+\
+    .status-pill-dot \{\
+      width: 7px;\
+      height: 7px;\
+      border-radius: 50%;\
+      background: var(--accent);\
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);\
+    \}\
+\
+    .section-title \{\
+      font-size: 14px;\
+      font-weight: 500;\
+      margin-bottom: 4px;\
+    \}\
+\
+    .metrics-grid \{\
+      display: grid;\
+      grid-template-columns: repeat(2, 1fr);\
+      gap: 10px;\
+      margin-bottom: 4px;\
+    \}\
+\
+    .metric-card \{\
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.08), rgba(15, 23, 42, 0.9));\
+      border-radius: 14px;\
+      padding: 8px;\
+      border: 1px solid rgba(148, 163, 184, 0.18);\
+    \}\
+\
+    .metric-label \{\
+      font-size: 11px;\
+      color: var(--text-muted);\
+      margin-bottom: 4px;\
+    \}\
+\
+    .metric-value \{\
+      font-size: 16px;\
+      font-weight: 600;\
+    \}\
+\
+    .progress-bar \{\
+      height: 4px;\
+      border-radius: 999px;\
+      background: rgba(15, 23, 42, 0.9);\
+      overflow: hidden;\
+      margin-top: 4px;\
+    \}\
+\
+    .progress-fill \{\
+      height: 100%;\
+      border-radius: inherit;\
+      background: linear-gradient(90deg, #22c55e, var(--accent));\
+      width: 0;\
+      transition: width 0.25s ease-out;\
+    \}\
+\
+    .btn-row \{\
+      display: flex;\
+      flex-wrap: wrap;\
+      gap: 6px;\
+      margin-top: 10px;\
+    \}\
+\
+    .btn \{\
+      flex: 1;\
+      border-radius: 999px;\
+      border: none;\
+      font-size: 13px;\
+      padding: 8px 10px;\
+      font-weight: 500;\
+      cursor: pointer;\
+      transition: 0.1s;\
+    \}\
+\
+    .btn-primary \{\
+      background: radial-gradient(circle at top, var(--accent), #0ea5e9);\
+      color: #0b1220;\
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);\
+    \}\
+\
+    .btn-secondary \{\
+      background: rgba(15, 23, 42, 0.95);\
+      color: var(--text-main);\
+      border: 1px solid rgba(148, 163, 184, 0.35);\
+    \}\
+\
+    .advice-card \{\
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.96));\
+      border-radius: var(--radius-lg);\
+      padding: 10px 11px;\
+      border: 1px solid rgba(56, 189, 248, 0.25);\
+      margin-top: 8px;\
+    \}\
+\
+    footer \{\
+      margin-top: 10px;\
+      font-size: 10px;\
+      text-align: center;\
+      color: var(--text-muted);\
+      opacity: 0.6;\
+    \}\
+  </style>\
+</head>\
+<body>\
+  <div class="app">\
+    <div class="card">\
+      <div class="header">\
+        <div>\
+          <div class="title">Sales Focus</div>\
+          <div class="date" id="today-date"></div>\
+        </div>\
+        <div class="status-pill" id="status-pill">\
+          <span class="status-pill-dot"></span>\
+          <span id="status-text">\uc0\u1057 \u1090 \u1072 \u1088 \u1090  \u1076 \u1085 \u1103 </span>\
+        </div>\
+      </div>\
+    </div>\
+\
+    <div class="card">\
+      <div class="section-title">\uc0\u1058 \u1074 \u1086 \u1080  \u1076 \u1077 \u1081 \u1089 \u1090 \u1074 \u1080 \u1103  \u1089 \u1077 \u1075 \u1086 \u1076 \u1085 \u1103 </div>\
+\
+      <div class="metrics-grid">\
+        <div class="metric-card">\
+          <div class="metric-label">\uc0\u1047 \u1074 \u1086 \u1085 \u1082 \u1080 </div>\
+          <div class="metric-value" id="calls-value">0 / 70</div>\
+          <div class="progress-bar"><div class="progress-fill" id="calls-progress"></div></div>\
+        </div>\
+        <div class="metric-card">\
+          <div class="metric-label">\uc0\u1044 \u1086 \u1079 \u1074 \u1086 \u1085 \u1099 </div>\
+          <div class="metric-value" id="reached-value">0 / 25</div>\
+          <div class="progress-bar"><div class="progress-fill" id="reached-progress"></div></div>\
+        </div>\
+        <div class="metric-card">\
+          <div class="metric-label">\uc0\u1042 \u1089 \u1090 \u1088 \u1077 \u1095 \u1080  \u1087 \u1088 \u1086 \u1074 \u1077 \u1076 \u1077 \u1085 \u1086 </div>\
+          <div class="metric-value" id="meetings-value">0 / 2</div>\
+          <div class="progress-bar"><div class="progress-fill" id="meetings-progress"></div></div>\
+        </div>\
+        <div class="metric-card">\
+          <div class="metric-label">\uc0\u1042 \u1089 \u1090 \u1088 \u1077 \u1095 \u1080  \u1085 \u1072 \u1079 \u1085 \u1072 \u1095 \u1077 \u1085 \u1086 </div>\
+          <div class="metric-value" id="scheduled-value">0 / 2</div>\
+          <div class="progress-bar"><div class="progress-fill" id="scheduled-progress"></div></div>\
+        </div>\
+      </div>\
+\
+      <div class="btn-row">\
+        <button class="btn btn-primary" id="btn-add-call">+ \uc0\u1047 \u1074 \u1086 \u1085 \u1086 \u1082 </button>\
+        <button class="btn btn-secondary" id="btn-add-reached">+ \uc0\u1044 \u1086 \u1079 \u1074 \u1086 \u1085 </button>\
+        <button class="btn btn-secondary" id="btn-add-meeting">+ \uc0\u1055 \u1088 \u1086 \u1074 \u1105 \u1083  \u1074 \u1089 \u1090 \u1088 \u1077 \u1095 \u1091 </button>\
+        <button class="btn btn-secondary" id="btn-add-scheduled">+ \uc0\u1053 \u1072 \u1079 \u1085 \u1072 \u1095 \u1080 \u1083  \u1074 \u1089 \u1090 \u1088 \u1077 \u1095 \u1091 </button>\
+      </div>\
+    </div>\
+\
+    <div class="card">\
+      <div class="section-title">\uc0\u1057 \u1086 \u1074 \u1077 \u1090  \u1085 \u1072  \u1089 \u1077 \u1081 \u1095 \u1072 \u1089 </div>\
+      <div class="advice-card">\
+        <div id="advice-main">\uc0\u1053 \u1072 \u1095 \u1085 \u1080  \u1076 \u1077 \u1085 \u1100  \u1089  \u1087 \u1077 \u1088 \u1074 \u1099 \u1093  \u1079 \u1074 \u1086 \u1085 \u1082 \u1086 \u1074 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1079 \u1072 \u1076 \u1072 \u1090 \u1100  \u1090 \u1077 \u1084 \u1087  \u55357 \u56490 </div>\
+        <div style="font-size:11px;color:#9ca3af;" id="advice-extra">\uc0\u1044 \u1086 \u1073 \u1072 \u1074 \u1100  \u1087 \u1077 \u1088 \u1074 \u1099 \u1077  5 \u1079 \u1074 \u1086 \u1085 \u1082 \u1086 \u1074  \u1080  \u1076 \u1086 \u1079 \u1074 \u1086 \u1085 \u1086 \u1074 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1103  \u1088 \u1072 \u1089 \u1089 \u1095 \u1080 \u1090 \u1072 \u1083  \u1076 \u1080 \u1085 \u1072 \u1084 \u1080 \u1082 \u1091 .</div>\
+      </div>\
+    </div>\
+\
+    <footer>\uc0\u1044 \u1072 \u1085 \u1085 \u1099 \u1077  \u1089 \u1086 \u1093 \u1088 \u1072 \u1085 \u1103 \u1102 \u1090 \u1089 \u1103  \u1083 \u1086 \u1082 \u1072 \u1083 \u1100 \u1085 \u1086  (offline).</footer>\
+  </div>\
+\
+  <script>\
+    // === \uc0\u1053 \u1040 \u1057 \u1058 \u1056 \u1054 \u1049 \u1050 \u1048  \u1062 \u1045 \u1051 \u1045 \u1049  ===\
+    const goals = \{\
+      calls: 70,\
+      reached: 25,\
+      meetings: 2,\
+      scheduled: 2\
+    \};\
+\
+    const WORK_START_HOUR = 9.5;\
+    const WORK_END_HOUR = 18.5;\
+\
+    const state = \{\
+      calls: 0,\
+      reached: 0,\
+      meetings: 0,\
+      scheduled: 0\
+    \};\
+\
+    function saveState() \{\
+      localStorage.setItem("salesFocus", JSON.stringify(state));\
+    \}\
+\
+    function loadState() \{\
+      const data = localStorage.getItem("salesFocus");\
+      if (data) Object.assign(state, JSON.parse(data));\
+    \}\
+\
+    function updateUI() \{\
+      document.getElementById("calls-value").textContent = `$\{state.calls\} / $\{goals.calls\}`;\
+      document.getElementById("reached-value").textContent = `$\{state.reached\} / $\{goals.reached\}`;\
+      document.getElementById("meetings-value").textContent = `$\{state.meetings\} / $\{goals.meetings\}`;\
+      document.getElementById("scheduled-value").textContent = `$\{state.scheduled\} / $\{goals.scheduled\}`;\
+\
+      const setWidth = (id, value, goal) => \{\
+        document.getElementById(id).style.width = `$\{Math.min((value / goal) * 100, 100)\}%`;\
+      \};\
+\
+      setWidth("calls-progress", state.calls, goals.calls);\
+      setWidth("reached-progress", state.reached, goals.reached);\
+      setWidth("meetings-progress", state.meetings, goals.meetings);\
+      setWidth("scheduled-progress", state.scheduled, goals.scheduled);\
+\
+      const advice = getAdvice();\
+      document.getElementById("advice-main").textContent = advice.main;\
+      document.getElementById("advice-extra").textContent = advice.extra;\
+      document.getElementById("status-text").textContent = advice.status;\
+\
+      saveState();\
+    \}\
+\
+    function getDayFraction() \{\
+      const now = new Date();\
+      const h = now.getHours() + now.getMinutes() / 60;\
+      if (h <= WORK_START_HOUR) return 0;\
+      if (h >= WORK_END_HOUR) return 1;\
+      return (h - WORK_START_HOUR) / (WORK_END_HOUR - WORK_START_HOUR);\
+    \}\
+\
+    function getAdvice() \{\
+      const f = getDayFraction();\
+      const callsExpected = goals.calls * f;\
+      const reachedExpected = goals.reached * f;\
+\
+      let status = "\uc0\u1042  \u1087 \u1088 \u1086 \u1094 \u1077 \u1089 \u1089 \u1077 ";\
+      let main = "";\
+      let extra = "";\
+\
+      if (state.calls < callsExpected - 10) \{\
+        status = "\uc0\u1054 \u1090 \u1089 \u1090 \u1072 \u1074 \u1072 \u1085 \u1080 \u1077  \u1087 \u1086  \u1079 \u1074 \u1086 \u1085 \u1082 \u1072 \u1084 ";\
+        main = "\uc0\u1057 \u1076 \u1077 \u1083 \u1072 \u1081  \u1073 \u1083 \u1086 \u1082  \u1080 \u1079  10 \u1079 \u1074 \u1086 \u1085 \u1082 \u1086 \u1074  \u1087 \u1086 \u1076 \u1088 \u1103 \u1076 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1074 \u1099 \u1088 \u1086 \u1074 \u1085 \u1103 \u1090 \u1100  \u1090 \u1077 \u1084 \u1087 .";\
+        extra = "\uc0\u1053 \u1077  \u1072 \u1085 \u1072 \u1083 \u1080 \u1079 \u1080 \u1088 \u1091 \u1081  \'97 \u1087 \u1088 \u1086 \u1089 \u1090 \u1086  \u1076 \u1086 \u1073 \u1077 \u1081  \u1087 \u1083 \u1072 \u1085  \u1087 \u1086  \u1082 \u1086 \u1083 \u1080 \u1095 \u1077 \u1089 \u1090 \u1074 \u1091 , \u1087 \u1086 \u1090 \u1086 \u1084  \u1088 \u1072 \u1079 \u1073 \u1077 \u1088 \u1105 \u1096 \u1100  \u1082 \u1086 \u1085 \u1074 \u1077 \u1088 \u1089 \u1080 \u1080 .";\
+      \} else if (state.reached < reachedExpected - 5) \{\
+        status = "\uc0\u1057 \u1083 \u1072 \u1073 \u1099 \u1077  \u1076 \u1086 \u1079 \u1074 \u1086 \u1085 \u1099 ";\
+        main = "\uc0\u1044 \u1086 \u1079 \u1074 \u1086 \u1085 \u1086 \u1074  \u1084 \u1077 \u1085 \u1100 \u1096 \u1077  \u1085 \u1086 \u1088 \u1084 \u1099 . \u1055 \u1088 \u1086 \u1074 \u1077 \u1088 \u1100  \u1082 \u1072 \u1095 \u1077 \u1089 \u1090 \u1074 \u1086  \u1073 \u1072 \u1079 \u1099  \u1080  \u1074 \u1088 \u1077 \u1084 \u1103  \u1079 \u1074 \u1086 \u1085 \u1082 \u1086 \u1074 .";\
+        extra = "\uc0\u1055 \u1086 \u1087 \u1088 \u1086 \u1073 \u1091 \u1081  \u1089 \u1076 \u1074 \u1080 \u1085 \u1091 \u1090 \u1100  \u1079 \u1074 \u1086 \u1085 \u1082 \u1080  \u1085 \u1072  \u1076 \u1088 \u1091 \u1075 \u1086 \u1077  \u1074 \u1088 \u1077 \u1084 \u1103  \u1076 \u1085 \u1103  \u1080 \u1083 \u1080  \u1087 \u1086 \u1084 \u1077 \u1085 \u1103 \u1081  \u1089 \u1077 \u1075 \u1084 \u1077 \u1085 \u1090  \u1082 \u1083 \u1080 \u1077 \u1085 \u1090 \u1086 \u1074 .";\
+      \} else if (state.scheduled < state.meetings && state.reached > 10) \{\
+        status = "\uc0\u1052 \u1072 \u1083 \u1086  \u1085 \u1072 \u1079 \u1085 \u1072 \u1095 \u1077 \u1085 \u1085 \u1099 \u1093  \u1074 \u1089 \u1090 \u1088 \u1077 \u1095 ";\
+        main = "\uc0\u1059  \u1090 \u1077 \u1073 \u1103  \u1093 \u1074 \u1072 \u1090 \u1072 \u1077 \u1090  \u1076 \u1086 \u1079 \u1074 \u1086 \u1085 \u1086 \u1074 , \u1085 \u1086  \u1084 \u1072 \u1083 \u1086  \u1085 \u1072 \u1079 \u1085 \u1072 \u1095 \u1077 \u1085 \u1080 \u1081 .";\
+        extra = "\uc0\u1044 \u1086 \u1073 \u1072 \u1074 \u1100  \u1095 \u1105 \u1090 \u1082 \u1080 \u1081  \u1073 \u1083 \u1086 \u1082  \u1094 \u1077 \u1085 \u1085 \u1086 \u1089 \u1090 \u1080  \u1074  \u1082 \u1086 \u1085 \u1094 \u1077  \u1088 \u1072 \u1079 \u1075 \u1086 \u1074 \u1086 \u1088 \u1072  \u1080  \u1087 \u1086 \u1087 \u1088 \u1086 \u1089 \u1080  \u1082 \u1086 \u1085 \u1082 \u1088 \u1077 \u1090 \u1085 \u1099 \u1081  \u1089 \u1083 \u1086 \u1090  \u1076 \u1083 \u1103  Zoom.";\
+      \} else if (state.calls >= goals.calls && state.reached >= goals.reached) \{\
+        status = "\uc0\u1055 \u1083 \u1072 \u1085  \u1074 \u1099 \u1087 \u1086 \u1083 \u1085 \u1077 \u1085  \u9989 ";\
+        main = "\uc0\u1054 \u1090 \u1083 \u1080 \u1095 \u1085 \u1099 \u1081  \u1076 \u1077 \u1085 \u1100 ! \u1052 \u1086 \u1078 \u1085 \u1086  \u1087 \u1086 \u1076 \u1074 \u1077 \u1089 \u1090 \u1080  \u1080 \u1090 \u1086 \u1075 \u1080  \u1080  \u1079 \u1072 \u1087 \u1080 \u1089 \u1072 \u1090 \u1100  \u1074 \u1099 \u1074 \u1086 \u1076 \u1099  \u1087 \u1086  \u1082 \u1086 \u1085 \u1074 \u1077 \u1088 \u1089 \u1080 \u1080 .";\
+        extra = "\uc0\u1057 \u1086 \u1093 \u1088 \u1072 \u1085 \u1080  \u1092 \u1088 \u1072 \u1079 \u1099 , \u1082 \u1086 \u1090 \u1086 \u1088 \u1099 \u1077  \u1083 \u1091 \u1095 \u1096 \u1077  \u1074 \u1089 \u1077 \u1075 \u1086  \u1089 \u1088 \u1072 \u1073 \u1086 \u1090 \u1072 \u1083 \u1080  \u1089 \u1077 \u1075 \u1086 \u1076 \u1085 \u1103 .";\
+      \} else \{\
+        status = "\uc0\u1048 \u1076 \u1105 \u1096 \u1100  \u1087 \u1086  \u1087 \u1083 \u1072 \u1085 \u1091 ";\
+        main = "\uc0\u1058 \u1077 \u1084 \u1087  \u1093 \u1086 \u1088 \u1086 \u1096 \u1080 \u1081 . \u1055 \u1088 \u1086 \u1076 \u1086 \u1083 \u1078 \u1072 \u1081  \u1076 \u1086 \u1079 \u1074 \u1072 \u1085 \u1080 \u1074 \u1072 \u1090 \u1100 \u1089 \u1103  \u1080  \u1079 \u1072 \u1082 \u1088 \u1077 \u1087 \u1080  \u1091 \u1089 \u1087 \u1077 \u1093  \u1074 \u1089 \u1090 \u1088 \u1077 \u1095 \u1072 \u1084 \u1080 .";\
+        extra = "\uc0\u1057 \u1086 \u1089 \u1088 \u1077 \u1076 \u1086 \u1090 \u1086 \u1095 \u1100 \u1089 \u1103  \u1085 \u1072  \u1090 \u1086 \u1084 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1082 \u1072 \u1078 \u1076 \u1099 \u1081  \u1076 \u1086 \u1079 \u1074 \u1086 \u1085  \u1087 \u1088 \u1077 \u1074 \u1088 \u1072 \u1097 \u1072 \u1083 \u1089 \u1103  \u1074  \u1085 \u1072 \u1079 \u1085 \u1072 \u1095 \u1077 \u1085 \u1085 \u1091 \u1102  \u1074 \u1089 \u1090 \u1088 \u1077 \u1095 \u1091 .";\
+      \}\
+\
+      return \{ status, main, extra \};\
+    \}\
+\
+    document.getElementById("btn-add-call").onclick = () => \{ state.calls++; updateUI(); \};\
+    document.getElementById("btn-add-reached").onclick = () => \{ state.reached++; updateUI(); \};\
+    document.getElementById("btn-add-meeting").onclick = () => \{ state.meetings++; updateUI(); \};\
+    document.getElementById("btn-add-scheduled").onclick = () => \{ state.scheduled++; updateUI(); \};\
+\
+    document.addEventListener("DOMContentLoaded", () => \{\
+      const now = new Date();\
+      document.getElementById("today-date").textContent = now.toLocaleDateString("ru-RU");\
+      loadState();\
+      updateUI();\
+    \});\
+  </script>\
+</body>\
+</html>\
+}
