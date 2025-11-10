@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Вход — Sales Focus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: radial-gradient(circle at top, #53118F, #140022 80%);
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(147, 61, 201, 0.4);
+    }
+    input {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      width: 200px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #933DC9;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Вход в Sales Focus</h2>
+    <input id="username" type="text" placeholder="Введите имя" />
+    <br/>
+    <button onclick="login()">Войти</button>
+  </div>
+
+  <script>
+    if (localStorage.getItem("userName")) {
+      window.location.href = "index.html";
+    }
+
+    function login() {
+      const name = document.getElementById("username").value.trim();
+      if (name) {
+        localStorage.setItem("userName", name);
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
